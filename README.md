@@ -1,5 +1,24 @@
 # Creating a Simple Voting DApp on Celo using Solidity and Truffle
 
+## Table Of Contents
+
+- [Creating a Simple Voting DApp on Celo using Solidity and Truffle](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle)
+- [Table Of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Setup Environment](#1-setup-environment)
+- [Smart Contract](#2-smart-contract)
+- [Migration](#3-migration)
+- [Celo Network Configuration](#4-celo-network-configuration)
+- [Deploy Contract to Celo Network](#5-deploy-contract-to-celo-network)
+- [Build the User Interface](#6-build-the-user-interface)
+- [Add Authentication](#7-add-authentication)
+- [Authentication and Transaction Signing using DappKit](#9-authentication-and-transaction-signing-using-dappkit)
+- [Display Vote Counts](#10-display-vote-counts)
+- [Conclusion](#conclusion)
+
+
+## Introduction
+
 In the world of blockchain, decentralized applications (DApps) are getting more and more well-liked. In this tutorial, we'll use Solidity and the Truffle framework to build a straightforward voting DApp for the Celo blockchain. The voting DApp will let users cast their votes in Celo Dollars (cUSD) for their preferred candidate.
 
 ## 1: Setup Environment
@@ -19,7 +38,7 @@ With the required files and folders, a new Truffle project will be created as a 
 
 ## 2: Smart Contract
 
-The next step is to build a smart contract that would let users choose their preferred candidate. Make a new file called Voting.sol in the contracts folder. Define the following contract in this file:
+The next step is to build a smart contract that would let users choose their preferred candidate. Create a new file called Voting.sol in the contracts folder. Define the following contract in this file:
 
 ``` solidity
 pragma solidity ^0.8.0;
@@ -39,7 +58,7 @@ contract Voting {
 }
 ```
 
-We define a votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
+We defined a votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
 
 ## 3: Migration
 
