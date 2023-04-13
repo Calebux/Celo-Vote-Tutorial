@@ -1,3 +1,13 @@
+# What is a Voting DApp?
+
+A Voting DApp is a decentralized application built on a blockchain network that allows users to participate in a secure and transparent voting process without the need for a centralized authority.
+
+In a Voting DApp, the voting process is conducted on a blockchain network, which ensures that the voting results are tamper-proof and cannot be altered by any party. The voters can cast their votes anonymously, and the results are publicly visible for anyone to verify.
+
+Voting DApps can be used for various purposes, such as elections, surveys, decision-making processes, and more. They can be designed to accommodate different voting methods, such as first-past-the-post, ranked-choice, and more.
+
+Some popular examples of Voting DApps include Horizon State, Votem, and Agora Voting.
+
 # Creating a Simple Voting DApp on Celo using Solidity and Truffle
 
 ## Table Of Contents
@@ -34,13 +44,14 @@ mkdir voting-dapp
 cd voting-dapp
 truffle init
 ```
+
 With the required files and folders, a new Truffle project will be created as a result.
 
 ## 2: Smart Contract
 
 The next step is to build a smart contract that would let users choose their preferred candidate. Create a new file called Voting.sol in the contracts folder. Define the following contract in this file:
 
-``` solidity
+```solidity
 pragma solidity ^0.8.0;
 
 contract Voting {
@@ -79,28 +90,28 @@ By running this script, Truffle is instructed to publish our Voting contract to 
 We must set up our network settings before we can publish our smart contract to the Celo blockchain. Make a new file called truffle-config.js in the project directory. Add the following code to this file:
 
 ```javascript
-const path = require('path');
+const path = require("path");
 
-const fs = require('fs');
+const fs = require("fs");
 
-const privateKey = fs.readFileSync('<PATH_TO_PRIVATE_KEY>').toString();
+const privateKey = fs.readFileSync("<PATH_TO_PRIVATE_KEY>").toString();
 
 module.exports = {
   networks: {
     alfajores: {
       provider: () => {
-        const Web3 = require('web3');
-        const web3 = new Web3('<CELO_PROVIDER>');
-        return web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
+        const Web3 = require("web3");
+        const web3 = new Web3("<CELO_PROVIDER>");
+        return web3.eth.accounts.privateKeyToAccount("0x" + privateKey);
       },
       network_id: 44787,
-      gasPrice: '20000000000',
+      gasPrice: "20000000000",
       gas: 8000000,
     },
   },
   compilers: {
     solc: {
-      version: '0.8.0',
+      version: "0.8.0",
       settings: {
         optimizer: {
           enabled: true,
@@ -323,7 +334,7 @@ class Voting extends Component {
 
 We must update our smart contract to include a function that returns the total number of votes cast for each candidate in order to display the voting results. This is the most recent Voting.sol code:
 
-``` solidity
+```solidity
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Voting {
@@ -430,7 +441,7 @@ class Voting extends Component {
       Kit)
 ```
 
-##  9: Authentication and Transaction Signing using DappKit
+## 9: Authentication and Transaction Signing using DappKit
 
 We need to first authenticate the user before we can sign transactions. The @celo/dappkit library can be used to ask the Celo Wallet app for a signature.
 
@@ -451,27 +462,33 @@ async authenticate() {
     this.setState({ dappkitResponse });
   }
 ```
+
 In order to integrate the authentication process, we also need to edit our handleVote function:
 
 ```javascript
 handleVote = async (event) => {
-    event.preventDefault();
-    const { contract, selectedCandidate } = this.state;
+  event.preventDefault();
+  const { contract, selectedCandidate } = this.state;
 
-    await this.authenticate();
+  await this.authenticate();
 
-    const accounts = await window.web3.eth.getAccounts();
-    const account = accounts[0];
+  const accounts = await window.web3.eth.getAccounts();
+  const account = accounts[0];
 
-    const voteCount = await contract.methods.getVotes(selectedCandidate).call();
+  const voteCount = await contract.methods.getVotes(selectedCandidate).call();
 
-    await contract.methods.vote(selectedCandidate).send({
-      from: account,
-      gas: 200000,
-    });
+  await contract.methods.vote(selectedCandidate).send({
+    from: account,
+    gas: 200000,
+  });
 
-    this.setState({ voteCounts: { ...this.state.voteCounts, [selectedCandidate]: parseInt(voteCount) + 1 } });
-  }
+  this.setState({
+    voteCounts: {
+      ...this.state.voteCounts,
+      [selectedCandidate]: parseInt(voteCount) + 1,
+    },
+  });
+};
 ```
 
 It is known as .Prior to the vote transaction, authenticate() and watch for the dappkitResponse to be returned. We then utilize contract.methods to conduct the vote transaction after retrieving the user's account.vote(selectedCandidate).send(). Finally, we update the state's vote total.
@@ -494,6 +511,7 @@ async getVoteCounts() {
 We invoke contract.methods for each candidate in a loop.getVotes(candidate).We use call() to get the number of votes cast, then we save it in the voteCounts object in the state.
 
 ## 10: Display Vote Counts
+
 To display the vote totals for each contender, we must lastly change the Voting.js file. We'll introduce a new function, renderVoteCounts, which returns a list of candidates together with the total number of votes they've received:
 
 ```javascript
@@ -538,6 +556,3 @@ Additionally, we used React to create the user interface and the web3 library to
 This tutorial gives you a fundamental grasp of how to use Solidity and Truffle to build a DApp for the Celo network. With this framework, you may construct more intricate DApps that communicate with the Celo blockchain and make use of the capabilities of the platform to develop ground-breaking solutions.
 
 Regardless of their background or location, developers may contribute to the development of a more open and accessible financial system by building DApps on the Celo network. Decentralized applications that may assist solve real-world problems are becoming more and more necessary as blockchain technology is being adopted more widely. The Celo network offers developers a strong platform on which to build these applications and advance global financial inclusion.
-
-
-
