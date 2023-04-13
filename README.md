@@ -1,6 +1,6 @@
-# Creating a Simple Voting DApp on Celo using Solidity and Truffle
+# Creating a Simple Voting DApp on Celo using Solidity and Truffle-
 
-## Table Of Contents
+## Table Of Contents:
 
 - [Creating a Simple Voting DApp on Celo using Solidity and Truffle](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle)
 - [Table Of Contents](#table-of-contents)
@@ -12,18 +12,18 @@
 - [Deploy Contract to Celo Network](#5-deploy-contract-to-celo-network)
 - [Build the User Interface](#6-build-the-user-interface)
 - [Add Authentication](#7-add-authentication)
-- [Authentication and Transaction Signing using DappKit](#9-authentication-and-transaction-signing-using-dappkit)
-- [Display Vote Counts](#10-display-vote-counts)
+- [Authentication and Transaction Signing using DappKit](#8-authentication-and-transaction-signing-using-dappkit)
+- [Display Vote Counts](#9-display-vote-counts)
 - [Conclusion](#conclusion)
 
 
-## Introduction
+## Introduction:
 
-In the world of blockchain, decentralized applications (DApps) are getting more and more well-liked. In this tutorial, we'll use Solidity and the Truffle framework to build a straightforward voting DApp for the Celo blockchain. The voting DApp will let users cast their votes in Celo Dollars (cUSD) for their preferred candidate.
+In the world of blockchain, decentralized applications (DApps) are getting more and more well-recognized. In this tutorial, we'll use Solidity and the Truffle framework to build a voting DApp for the Celo blockchain. The voting DApp will let users cast their votes in Celo Dollars (cUSD) for their preferred candidate.
 
-## 1: Setup Environment
+## Step 1: Setup Environment-
 
-Setting up the development environment is the first step. Make sure Node.js is set up on your PC. then execute the subsequent command in your terminal to install Truffle:
+First step is to set up the development environment. Make sure [Node.js](https://nodejs.org/en/download) is set up on your PC. Then, execute the subsequent command in your terminal to install [Truffle](https://trufflesuite.com/docs/truffle/how-to/install/):
 
 `npm install -g truffle`
 
@@ -34,9 +34,10 @@ mkdir voting-dapp
 cd voting-dapp
 truffle init
 ```
-With the required files and folders, a new Truffle project will be created as a result.
+As a result, a new Truffle project will be created with the required files & folders installed.
 
-## 2: Smart Contract
+
+## Step 2: Smart Contract-
 
 The next step is to build a smart contract that would let users choose their preferred candidate. Create a new file called Voting.sol in the contracts folder. Define the following contract in this file:
 
@@ -58,11 +59,11 @@ contract Voting {
 }
 ```
 
-We defined a votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
+We defined votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
 
-## 3: Migration
+## Step 3: Migration-
 
-The migration script we write next will be used to publish our smart contract to the Celo blockchain. Make a new file called 2_deploy_contracts.js in the migrations folder. Add the following code to this file:
+Now, the migration script we write will be used to publish our smart contract to the Celo blockchain. Make a new file called 2_deploy_contracts.js in the migrations folder. Add the following code to this file:
 
 ```javascript
 const Voting = artifacts.require("Voting");
@@ -74,7 +75,7 @@ module.exports = function (deployer) {
 
 By running this script, Truffle is instructed to publish our Voting contract to the Celo blockchain.
 
-## 4: Celo Network Configuration
+## Step 4: Celo Network Configuration-
 
 We must set up our network settings before we can publish our smart contract to the Celo blockchain. Make a new file called truffle-config.js in the project directory. Add the following code to this file:
 
@@ -112,7 +113,7 @@ module.exports = {
 };
 ```
 
-## 5: Deploy Contract to Celo Network
+## Step 5: Deploy Contract to Celo Network-
 
 We will enter the following command into our terminal in order to launch our smart contract onto the Celo network:
 
@@ -122,9 +123,9 @@ truffle migrate --network alfajores
 
 Using the alfajores network configuration that we specified in truffle-config.js, this command instructs truffle to migrate our contract to the celo network. Truffle will output the contract address after the migration is finished, which we will use to communicate with our voting DApp.
 
-## 6: Build the User Interface
+## Step 6: Build the User Interface-
 
-The user interface for our voting DApp has to be built next. React will be used in this scenario. Run the following command in your terminal to start a new React app:
+The user interface for our voting DApp has to be built next. [React](https://react-cn.github.io/react/downloads.html) will be used in this scenario. Run the below command on your terminal to start a new React app:
 
 ```bash
 npx create-react-app client
@@ -212,9 +213,9 @@ class Voting extends Component {
               }}
 ```
 
-## 7: Add Authentication
+## Step 7: Add Authentication-
 
-We need to put in place an authentication system that authenticates each voter in order to stop users from casting repeated ballots. To accomplish this, we can make use of the @celo/dappkit package.
+We need to put in place an authentication system that will authenticate each voter in order to stop users from casting repeated ballots. To accomplish this, we can make use of the @celo/dappkit package.
 
 Installing the package first requires typing the following command into your terminal:
 
@@ -430,7 +431,7 @@ class Voting extends Component {
       Kit)
 ```
 
-##  9: Authentication and Transaction Signing using DappKit
+##  Step 8: Authentication and Transaction Signing using DappKit-
 
 We need to first authenticate the user before we can sign transactions. The @celo/dappkit library can be used to ask the Celo Wallet app for a signature.
 
@@ -474,7 +475,7 @@ handleVote = async (event) => {
   }
 ```
 
-It is known as .Prior to the vote transaction, authenticate() and watch for the dappkitResponse to be returned. We then utilize contract.methods to conduct the vote transaction after retrieving the user's account.vote(selectedCandidate).send(). Finally, we update the state's vote total.
+It is known as .Prior to the vote transaction, authenticate() and watch for the dappkitResponse to be returned. We then, utilize contract.methods to conduct the vote transaction after retrieving the user's account.vote(selectedCandidate).send(). Finally, we update the state's vote total.
 
 In order to retrieve the vote totals for each candidate, we also need to alter our getVoteCounts function:
 
@@ -493,7 +494,8 @@ async getVoteCounts() {
 
 We invoke contract.methods for each candidate in a loop.getVotes(candidate).We use call() to get the number of votes cast, then we save it in the voteCounts object in the state.
 
-## 10: Display Vote Counts
+## Step 9: Display Vote Counts-
+
 To display the vote totals for each contender, we must lastly change the Voting.js file. We'll introduce a new function, renderVoteCounts, which returns a list of candidates together with the total number of votes they've received:
 
 ```javascript
@@ -529,15 +531,13 @@ render() {
         <form onSubmit>
 ```
 
-## Conclusion
+## Conclusion:
 
-Finally, utilizing Solidity and the Truffle framework, we were able to effectively develop a straightforward voting DApp for the Celo network. In order to get started, we first set up our development environment and used Solidity to build a smart contract. The contract was then deployed on the Celo network once we configured our network parameters.
+Finally, utilizing Solidity and the Truffle framework, we were able to effectively develop a simple voting DApp for the Celo network. In order to get started, we first set up our development environment and used Solidity to build a Smart Contract. The contract was then deployed on the Celo network once we configured our network parameters.
 
-Additionally, we used React to create the user interface and the web3 library to communicate with our smart contract. Finally, we put our DApp to the test by casting a ballot for a candidate and showing the results.
+Additionally, we used React to create the user interface and the web3 library to communicate with our Smart Contract. Finally, we put our DApp to the test by casting a ballot for a candidate and showing the results.
 
-This tutorial gives you a fundamental grasp of how to use Solidity and Truffle to build a DApp for the Celo network. With this framework, you may construct more intricate DApps that communicate with the Celo blockchain and make use of the capabilities of the platform to develop ground-breaking solutions.
+This tutorial gives you a fundamental grasp of how to use Solidity and Truffle to build a DApp for the Celo network. With this framework, you may construct more intricate DApps that communicates with the Celo blockchain and make use of the capabilities of the platform to develop ground-breaking solutions to modern problems.
 
-Regardless of their background or location, developers may contribute to the development of a more open and accessible financial system by building DApps on the Celo network. Decentralized applications that may assist solve real-world problems are becoming more and more necessary as blockchain technology is being adopted more widely. The Celo network offers developers a strong platform on which to build these applications and advance global financial inclusion.
-
-
+Regardless of their background or location, developers may contribute to the development of a more open and accessible financial systems by building DApps on the Celo network. Decentralized applications that may assist solve real-world problems are becoming more and more necessary as blockchain technology is being adopted more widely. The Celo network offers developers a strong platform on which to build these applications and advance global financial inclusion.
 
