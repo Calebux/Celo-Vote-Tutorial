@@ -2,19 +2,18 @@
 
 ## Table Of Contents:
 
-- [Creating a Simple Voting DApp on Celo using Solidity and Truffle](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle)
-- [Table Of Contents](#table-of-contents)
-- [Introduction](#introduction)
-- [Setup Environment](#1-setup-environment)
-- [Smart Contract](#2-smart-contract)
-- [Migration](#3-migration)
-- [Celo Network Configuration](#4-celo-network-configuration)
-- [Deploy Contract to Celo Network](#5-deploy-contract-to-celo-network)
-- [Build the User Interface](#6-build-the-user-interface)
-- [Add Authentication](#7-add-authentication)
-- [Authentication and Transaction Signing using DappKit](#8-authentication-and-transaction-signing-using-dappkit)
-- [Display Vote Counts](#9-display-vote-counts)
-- [Conclusion](#conclusion)
+- [Creating a Simple Voting DApp on Celo using Solidity and Truffle-](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle-)
+  - [Table Of Contents:](#table-of-contents)
+  - [Introduction:](#introduction)
+  - [Step 1: Setup Environment-](#step-1-setup-environment-)
+  - [Step 2: Smart Contract-](#step-2-smart-contract-)
+  - [Step 3: Migration-](#step-3-migration-)
+  - [Step 4: Celo Network Configuration-](#step-4-celo-network-configuration-)
+  - [Step 5: Deploy Contract to Celo Network-](#step-5-deploy-contract-to-celo-network-)
+  - [Step 6: Build the User Interface-](#step-6-build-the-user-interface-)
+  - [Step 7: Add Authentication-](#step-7-add-authentication-)
+  - [Step 9: Display Vote Counts-](#step-9-display-vote-counts-)
+  - [Conclusion:](#conclusion)
 
 
 ## Introduction:
@@ -60,8 +59,6 @@ contract Voting {
 
     // Function to vote for a candidate
     function voteForCandidate(bytes32 candidate) public {
-        // Require that the candidate has received at least one vote before
-        require(votes[candidate] > 0, "Invalid candidate");
 
         // Increment the vote count for the candidate
         votes[candidate] += 1;
