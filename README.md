@@ -2,19 +2,18 @@
 
 ## Table Of Contents:
 
-- [Creating a Simple Voting DApp on Celo using Solidity and Truffle](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle)
-- [Table Of Contents](#table-of-contents)
-- [Introduction](#introduction)
-- [Setup Environment](#1-setup-environment)
-- [Smart Contract](#2-smart-contract)
-- [Migration](#3-migration)
-- [Celo Network Configuration](#4-celo-network-configuration)
-- [Deploy Contract to Celo Network](#5-deploy-contract-to-celo-network)
-- [Build the User Interface](#6-build-the-user-interface)
-- [Add Authentication](#7-add-authentication)
-- [Authentication and Transaction Signing using DappKit](#8-authentication-and-transaction-signing-using-dappkit)
-- [Display Vote Counts](#9-display-vote-counts)
-- [Conclusion](#conclusion)
+- [Creating a Simple Voting DApp on Celo using Solidity and Truffle-](#creating-a-simple-voting-dapp-on-celo-using-solidity-and-truffle-)
+  - [Table Of Contents:](#table-of-contents)
+  - [Introduction:](#introduction)
+  - [Step 1: Setup Environment-](#step-1-setup-environment-)
+  - [Step 2: Smart Contract-](#step-2-smart-contract-)
+  - [Step 3: Migration-](#step-3-migration-)
+  - [Step 4: Celo Network Configuration-](#step-4-celo-network-configuration-)
+  - [Step 5: Deploy Contract to Celo Network-](#step-5-deploy-contract-to-celo-network-)
+  - [Step 6: Build the User Interface-](#step-6-build-the-user-interface-)
+  - [Step 7: Add Authentication-](#step-7-add-authentication-)
+  - [Step 9: Display Vote Counts-](#step-9-display-vote-counts-)
+  - [Conclusion:](#conclusion)
 
 
 ## Introduction:
@@ -57,11 +56,15 @@ pragma solidity ^0.8.0;
 contract Voting {
     // Define a mapping to store candidate votes with candidate names as keys and vote counts as values
     mapping (bytes32 => uint256) public votes;
+    mapping(address => bool) public hasVoted;
 
     // Function to vote for a candidate
     function voteForCandidate(bytes32 candidate) public {
-        // Require that the candidate has received at least one vote before
-        require(votes[candidate] > 0, "Invalid candidate");
+        //check to ensure voter doesnt vote twice
+        require(hasVoted[msg.sender], "Already Voted");
+
+        //update voter status
+        hasVoted[msg.sender] = true;
 
         // Increment the vote count for the candidate
         votes[candidate] += 1;
@@ -80,7 +83,7 @@ contract Voting {
 
 ```
 
-We defined votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
+We defined votes mapping in this contract that will keep track of how many votes each contender has earned, while the hasVoted mapping tracks if a voter has voted before. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function,it checks to ensure voters dont vote twice, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
 
 ## Step 3: Migration-
 
@@ -386,6 +389,8 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Voting {
     string[] public candidates;     // Array to store the list of candidates
     mapping (string => uint256) public votes;     // Mapping to store the votes count for each candidate
+    mapping(address => bool) public hasVoted;     //Mapping to ensure voter doesnt vote twice
+
 
     constructor() {
         candidates = ["Candidate 1", "Candidate 2", "Candidate 3"];     // Constructor to initialize the candidates array with initial candidates
@@ -393,6 +398,13 @@ contract Voting {
 
     function vote(string memory candidate) public {
         require(validCandidate(candidate));     // Function to cast a vote for a valid candidate
+
+         //check to ensure voter doesnt vote twice
+        require(hasVoted[msg.sender], "Already Voted");
+
+        //update voter status
+        hasVoted[msg.sender] = true;
+        
         votes[candidate] += 1;     // Increment the vote count for the candidate
     }
 
