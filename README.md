@@ -56,10 +56,16 @@ pragma solidity ^0.8.0;
 contract Voting {
     // Define a mapping to store candidate votes with candidate names as keys and vote counts as values
     mapping (bytes32 => uint256) public votes;
+    mapping(address => bool) public hasVoted;
 
     // Function to vote for a candidate
     function voteForCandidate(bytes32 candidate) public {
+        //check to ensure voter doesnt vote twice
+        require(hasVoted[msg.sender], "Already Voted");
 
+        //update voter status
+        hasVoted[msg.sender] = true;
+        
         // Increment the vote count for the candidate
         votes[candidate] += 1;
     }
