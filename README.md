@@ -389,6 +389,8 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Voting {
     string[] public candidates;     // Array to store the list of candidates
     mapping (string => uint256) public votes;     // Mapping to store the votes count for each candidate
+    mapping(address => bool) public hasVoted;     //Mapping to ensure voter doesnt vote twice
+
 
     constructor() {
         candidates = ["Candidate 1", "Candidate 2", "Candidate 3"];     // Constructor to initialize the candidates array with initial candidates
@@ -396,6 +398,13 @@ contract Voting {
 
     function vote(string memory candidate) public {
         require(validCandidate(candidate));     // Function to cast a vote for a valid candidate
+
+         //check to ensure voter doesnt vote twice
+        require(hasVoted[msg.sender], "Already Voted");
+
+        //update voter status
+        hasVoted[msg.sender] = true;
+        
         votes[candidate] += 1;     // Increment the vote count for the candidate
     }
 
