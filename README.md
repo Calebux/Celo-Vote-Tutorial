@@ -65,7 +65,7 @@ contract Voting {
 
         //update voter status
         hasVoted[msg.sender] = true;
-        
+
         // Increment the vote count for the candidate
         votes[candidate] += 1;
     }
@@ -83,7 +83,7 @@ contract Voting {
 
 ```
 
-We defined votes mapping in this contract that will keep track of how many votes each contender has earned. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
+We defined votes mapping in this contract that will keep track of how many votes each contender has earned, while the hasVoted mapping tracks if a voter has voted before. VoteForCandidate and totalVotesFor are two additional functions that we define. Users can vote for their preferred candidate using the voteForCandidate function,it checks to ensure voters dont vote twice, and the totalVotesFor function gives the total number of votes cast for a specific candidate.
 
 ## Step 3: Migration-
 
