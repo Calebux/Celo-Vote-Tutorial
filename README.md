@@ -58,13 +58,28 @@ contract Voting {
     // Define a mapping to store candidate votes with candidate names as keys and vote counts as values
     mapping (bytes32 => uint256) public votes;
 
+    // Define a mapping to store whether an address has already voted or not
+    mapping (address => bool) public hasVoted;
+
+    // Define an event to log when a vote is cast
+    event VoteCast(address indexed voter, bytes32 candidate);
+
     // Function to vote for a candidate
     function voteForCandidate(bytes32 candidate) public {
-        // Require that the candidate has received at least one vote before
-        require(votes[candidate] > 0, "Invalid candidate");
+        // Require that the candidate has not received any vote before
+        require(votes[candidate] == 0, "Invalid candidate");
+
+        // Require that the sender has not already voted
+        require(!hasVoted[msg.sender], "Already voted");
 
         // Increment the vote count for the candidate
         votes[candidate] += 1;
+
+        // Record that the sender has voted
+        hasVoted[msg.sender] = true;
+
+        // Log the vote cast
+        emit VoteCast(msg.sender, candidate);
     }
 
     // Function to retrieve the total vote count for a candidate
